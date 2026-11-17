@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Insight"
+  short_description: "分析代码仓库并生成项目文档与面试学习资料"
+  default_prompt: "使用 $project-insight 分析当前仓库，生成项目结构、架构、核心算法、面试学习资料和思维导图。"
