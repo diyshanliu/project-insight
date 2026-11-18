@@ -1,6 +1,6 @@
 ---
 name: project-insight
-description: Analyze an existing software or robotics codebase and turn it into a verified project knowledge base: repository structure, file responsibilities, architecture, execution and data flows, core algorithms, Chinese interview-oriented learning guides and questions, Mermaid mind maps, and optional source-code annotations. Use when a user asks to understand, document, onboard to, audit the structure of, prepare interviews from, annotate, or incrementally update an existing code repository.
+description: Analyze an existing software or robotics codebase and turn it into a verified project knowledge base covering repository structure, file responsibilities, architecture, execution and data flows, core algorithms, Chinese interview-oriented learning guides and questions, Mermaid mind maps, optional source-code annotations, and standalone detailed guides explicitly requested for specific features or files. Use when a user asks to understand, document, onboard to, audit the structure of, prepare interviews from, annotate, or incrementally update an existing code repository.
 ---
 
 # Project Insight
@@ -26,6 +26,7 @@ Infer the mode from the user's request. If they ask generally to understand or d
 - **B — Interview learning:** use an existing analysis if it is current; otherwise perform enough repository analysis first. Generate or refresh the learning guide, knowledge summary, questions, answers, and mind map.
 - **C — Code annotation:** add functional section comments and useful class/function comments. Line-by-line teaching comments are optional and should be limited to selected core files. Do not modify source unless the user explicitly asks for in-place edits; otherwise create a separate annotated copy or Markdown commentary.
 - **D — Incremental update:** compare the current repository with the previous analysis, identify changed/deleted/added files, and update only affected documentation. Re-check any architecture or data-flow claim that may have become stale.
+- **E — 生成详细功能说明:** Generate or refresh a standalone, code-rich Chinese guide only when the user explicitly asks for such a document about identifiable features or files. Resolve targets from context; if the request for a guide is clear but its subject is missing, ask for the subject. Only then read `references/detailed-feature-guide.md`. An ordinary question about code is answered in chat. A–D never create or refresh these guides on their own, even when a previous guide exists. For combined requests, apply E only to the named subjects.
 
 If the repository root is ambiguous and cannot be inferred from the current working directory, ask one concise question for the root path. Do not ask for preferences already specified in the conversation.
 
@@ -46,14 +47,13 @@ For the other modes, the user still invokes the same skill and adds a short natu
 | `$project-insight` | A — Full analysis | Run the complete read-only project analysis and generate all required Markdown documents. |
 | `$project-insight 只做面试学习，基于现有分析生成知识点、题目和答案` | B — Interview learning | Reuse a current analysis where possible; otherwise inspect the relevant code first. |
 | `$project-insight 给 src/controller.cpp 添加功能分块注释` | C — Code annotation | Add functional comments to the specified file. Do not edit in place unless the user explicitly requests it. |
-| `$project-insight 对 PPO 核心实现做逐行讲解` | C — Code annotation (line-by-line subtask) | This is **not a fifth mode**. It is the optional detailed-commentary level within Mode C. |
+| `$project-insight 对 PPO 核心实现做逐行讲解` | C — Code annotation (line-by-line subtask) | Use the optional line-by-line commentary level within Mode C. |
 | `$project-insight 检查上次分析后的代码变化并更新文档` | D — Incremental update | Compare against the previous analysis and refresh affected documents. |
-
-There are exactly **four internal modes: A, B, C, and D**. Line-by-line explanation is a subtask/level inside Mode C, not a separate mode.
+| `$project-insight 把日志从提交到写入文件的过程写成一篇带源码的详细教程` | E — 生成详细功能说明 | Trace the feature across files and write one standalone guide. |
 
 The skill name is the only special invocation syntax. Everything after it is an ordinary-language task description. The user does not need to repeat the documentation format, analysis rules, interview priorities, or safety constraints because those are already defined in this skill.
 
-If the user says only `$project-insight`, do not ask which mode they want: use Mode A. If they specify a task that clearly maps to B, C, or D, infer that mode. Ask a question only when an essential detail such as the target repository or target files cannot be determined.
+If the user says only `$project-insight`, do not ask which mode they want: use Mode A. If they specify a task that clearly maps to B, C, D, or E, infer that mode. Ask a question only when an essential detail such as the target repository or target files cannot be determined.
 
 ## Full-analysis workflow
 

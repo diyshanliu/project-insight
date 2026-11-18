@@ -14,6 +14,7 @@ project-insight/
 │   ├── analysis-workflow.md
 │   ├── output-spec.md
 │   ├── interview-extraction.md
+│   ├── detailed-feature-guide.md
 │   ├── code-annotation.md
 │   ├── robotics-domain-guide.md
 │   └── safety-and-incremental.md
@@ -116,7 +117,7 @@ $project-insight
 
 这条命令默认执行完整项目分析（模式 A），不需要再补充其他要求。
 
-### 四种内部工作模式
+### 五种内部工作模式
 
 | 模式 | 什么时候用 | 示例 |
 |---|---|---|
@@ -124,8 +125,11 @@ $project-insight
 | B — 面试学习 | 已有项目分析，只想学习面试知识、题目和答案 | `$project-insight 只做面试学习，更新知识点、面试题和答案` |
 | C — 代码注释 | 想给源码增加功能分块注释或讲解 | `$project-insight 给 src/controller.cpp 添加功能分块注释` |
 | D — 增量更新 | 代码变化后，更新已有项目文档 | `$project-insight 检查上次分析后的代码变化并更新文档` |
+| E — 生成详细功能说明 | 希望通过一篇带源码的中文教程读懂指定功能或文件 | `$project-insight 给 AsyncSink 生成详细功能说明，讲清日志从提交到写入的过程` |
 
-**注意：逐行讲解不是第五种模式。** 它是模式 C 的一种可选注释粒度，例如：
+模式 E 可以单独使用，也可以和全套分析一起点名使用，例如“生成全套文档，另外把控制器和安全监督器如何配合写成一篇详细教程”。默认全套分析和常规增量更新都会跳过这些长文。你可以指定一个或多个文件、一个或多个功能。相关文件按主题串成一篇，独立主题默认分篇，文档放在目标仓库的 `docs/project-insight/details/`，也可以指定输出位置。
+
+如果只想贴着代码逐行读，可以使用模式 C，例如
 
 ```text
 $project-insight 对 PPO 核心实现做逐行讲解，先不要修改原始文件
